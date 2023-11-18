@@ -10,9 +10,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
+// 1. Auth
+// User (ID, UserCode, PersonNo, Password, RegisteredSince = now())
+// Role (ID, RoleDescription, ProgramPermission, RegisteredSince = now())
+// UserRole(UserID, RoleID, RegisteredSince = now())
+// Program(ID, PermitRoles, ProgramName, Route, Params, RegisteredSince=Now())
 
+// 2. Info
+// Patient (ID, PatientNo, FullName, DOB, Age, Sex, BloodGroup, Alergy, FatherName, SpouseName, Address (StreetName, Block, Township, City), RegisteredSince = now()
+// Person (ID, PersonNo, PersonType, FullName, Qualification, Specializing, Address (StreetName, Block, Township, City), RegisteredSince = now()
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String
+  userCode  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Patient {
+  id         Int       @id @default(autoincrement())
+  patientNo  String    @unique
+  fullName   String
+  dob        DateTime
+  age        Int
+  sex        GENDER
+  bloodGroup BLOODTYPE
+  alergy     String?
+  fatherName String?
+  spouseName String?
+  street     String
+  township   String
+  city       String
+  zipCode    Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum GENDER {
+  MALE
+  FEMALE
+}
+
+enum BLOODTYPE {
+  A_positive
+  A_negative
+  B_positive
+  B_negative
+  AB_positive
+  AB_negative
+  O_positive
+  O_negative
 }

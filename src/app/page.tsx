@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { prisma } from "@orm/client";
+import { prisma } from "@/orm/client";
 
 async function getUser() {
   "use server";
