@@ -10,23 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 1. Auth
-// User (ID, UserCode, PersonNo, Password, RegisteredSince = now())
-// Role (ID, RoleDescription, ProgramPermission, RegisteredSince = now())
-// UserRole(UserID, RoleID, RegisteredSince = now())
-// Program(ID, PermitRoles, ProgramName, Route, Params, RegisteredSince=Now())
-
-// 2. Info
-// Patient (ID, PatientNo, FullName, DOB, Age, Sex, BloodGroup, Alergy, FatherName, SpouseName, Address (StreetName, Block, Township, City), RegisteredSince = now()
-// Person (ID, PersonNo, PersonType, FullName, Qualification, Specializing, Address (StreetName, Block, Township, City), RegisteredSince = now()
-
 model User {
   id        Int      @id @default(autoincrement())
-  email     String
   userCode  String   @unique
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Role {
+  id                Int      @id @default(autoincrement())
+  description       String
+  programPermission String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Program {
+  id          Int      @id @default(autoincrement())
+  permitRoles String
+  programName String
+  route       String
+  params      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Patient {
@@ -46,6 +53,62 @@ model Patient {
   zipCode    Int
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+}
+
+model Person {
+  id            Int      @id @default(autoincrement())
+  personNo      String
+  personType    String
+  fullName      String
+  qualification String
+  street        String
+  township      String
+  city          String
+  zipCode       Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model IncomeBill {
+  id          Int      @id @default(autoincrement())
+  patientNo   String
+  totalAmount Decimal
+  operatorNo  String   @unique
+  isPosted    Boolean  @default(false)
+  isVoided    Boolean  @default(false)
+  postedDate  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model IncomeBillItem {
+  id           Int      @id @default(autoincrement())
+  incomeBillId Int
+  costCode     String   @unique
+  amount       Decimal
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ExpenseBill {
+  id          Int      @id @default(autoincrement())
+  patientNo   String
+  totalAmount Decimal
+  operatorNo  String   @unique
+  isPosted    Boolean  @default(false)
+  isVoided    Boolean  @default(false)
+  postedDate  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ExpenseBillItem {
+  id            Int      @id @default(autoincrement())
+  expenseBillId Int
+  costCode      String   @unique
+  amount        Decimal
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 enum GENDER {
