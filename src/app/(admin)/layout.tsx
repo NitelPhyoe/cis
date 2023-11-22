@@ -1,7 +1,10 @@
 "use client";
 
 import { useDisclosure } from "@mantine/hooks";
-import { AppShell, Burger } from "@mantine/core";
+import { AppShell } from "@mantine/core";
+
+import { SideNav } from "@/components/nav";
+import { HeaderMegaMenu } from "@/components/header/header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [opened, { toggle }] = useDisclosure();
@@ -13,11 +16,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       padding="md"
     >
       <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <div>Logo</div>
+        <HeaderMegaMenu />
       </AppShell.Header>
 
-      <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
+      <AppShell.Navbar p="md">
+        <SideNav />
+      </AppShell.Navbar>
 
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>

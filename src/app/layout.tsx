@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
